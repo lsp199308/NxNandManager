@@ -216,9 +216,9 @@ cd NxNandManager/NxNandManager
 make
 ```
 
-### NxNandManager_Qt6
+### NxNandManager_Qt6 : MinGW
 
-**Dependency :** ** [Qt](https://www.qt.io/download), [OpenSSL](https://www.openssl.org/source/).
+**Dependency :** [Qt](https://www.qt.io/download), [OpenSSL](https://www.openssl.org/source/).
 
 ```
 git clone https://github.com/lsp199308/NxNandManager
