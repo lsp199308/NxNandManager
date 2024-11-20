@@ -216,7 +216,16 @@ cd NxNandManager/NxNandManager
 make
 ```
 
-**Note :** Line ```#define ENABLE_GUI``` in file "gui/gui.h" has to be commented
+### NxNandManager_Qt6
+
+**Dependency :** ** [Qt](https://www.qt.io/download), [OpenSSL](https://www.openssl.org/source/).
+
+```
+git clone https://github.com/lsp199308/NxNandManager
+cd NxNandManager/NxNandManager_Qt6
+cmake -G "MinGW Makefiles" .
+mingw32-make
+```
 
 ### CLI + GUI (Qt) : MinGW
 
