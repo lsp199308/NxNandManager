@@ -1783,7 +1783,7 @@ bool NxStorage::isSinglePartType(int part_type)
 
 bool NxStorage::isNxStorage()
 {
-    return true;
+    return is_in(type, { RAWNAND, RAWMMC, BOOT0 , BOOT1 , PRODINFO, PRODINFOF, BCPKG21, BCPKG22, BCPKG23, BCPKG24, BCPKG25, BCPKG26, SAFE, SYSTEM, USER });
 }
 
 NxPartition* NxStorage::getNxPartition()
