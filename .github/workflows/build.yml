@@ -30,7 +30,7 @@ jobs:
           ln -s $(pwd) ~/NxNandManager
           cd ~/NxNandManager/NxNandManager_Qt6
           cmake -G "MinGW Makefiles" .
-          mingw32-make -j"$(nproc)"
+          mingw32-make -j1
           mkdir -p $GITHUB_WORKSPACE/bin
           cp NxNandManager.exe $GITHUB_WORKSPACE/bin
           cp virtual_fs/dokan/x64/dokan1.dll $GITHUB_WORKSPACE/bin
