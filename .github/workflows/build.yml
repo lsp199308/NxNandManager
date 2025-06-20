@@ -20,6 +20,7 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-make
             mingw-w64-x86_64-gcc
+           update: true
       - name: Download and extract PATCH.zip
         run: |
           curl -L https://github.com/lsp199308/NxNandManager/releases/download/QT%26Openssl/PATCH.zip -o PATCH.zip
