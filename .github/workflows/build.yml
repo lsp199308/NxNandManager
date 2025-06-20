@@ -29,7 +29,7 @@ jobs:
       - name: Download and extract PATCH.zip using 7-Zip
         run: |
           curl -L https://github.com/lsp199308/NxNandManager/releases/download/QT%26Openssl/PATCH.zip -o PATCH.zip
-          "C:\Program Files\7-Zip\7z.exe" x PATCH.zip -oC:\
+          & "C:\Program Files\7-Zip\7z.exe" x PATCH.zip -oC:\
 
       - name: build
         shell: msys2 {0}
