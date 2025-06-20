@@ -66,6 +66,10 @@ static NxStorageType NxTypesArr[] =
 
 // Title ID 0100000000000809 (SystemVersion)
 static NxSystemTitles systemTitlesArr[] = {
+    { "20.1.1", "5cb1ecaa7a31fe7ba1c37836a030ccb0.nca"},
+    { "20.1.0", "f58f9b84fba8df8227600d98cf326b5e.nca"},
+    { "20.0.1", "85872c8fc9e2d971b3848e454b408d1f.nca"},
+    { "20.0.0", "3a00a7cb68e2c6fd75bb6528a0a9cb66.nca"},
     { "19.0.1", "79e18e7cbd5de5b700f054bb95e95efd.nca"},
     { "19.0.0", "983b2ae2be700012c8a4c5ac9dd53e70.nca"},
     { "18.1.0", "3d2e5985a13bbb3865739ce9dba73d2a.nca"},
@@ -138,6 +142,10 @@ static NxSystemTitles systemTitlesArr[] = {
 
 // Title ID 010000000000081B (BootImagePackageExFat)
 static NxSystemTitles exFatTitlesArr[] = {
+    { "20.1.1", "793b767dc1ded58a9d1922df07bc0cd4.nca"},
+    { "20.1.0", "793b767dc1ded58a9d1922df07bc0cd4.nca"},
+    { "20.0.1", "9b1fe442efce8f3207088d1254fab1e5.nca"},
+    { "20.0.0", "9b1fe442efce8f3207088d1254fab1e5.nca"},
     { "19.0.1", "8e910e497b9caf91f992bc6c3ae91e44.nca"},
     { "19.0.0", "8e910e497b9caf91f992bc6c3ae91e44.nca"},
     { "18.1.0", "41d197d92b54c5ad172f86791a5b8493.nca"},
@@ -287,8 +295,8 @@ void NxStorage::constructor(const wstring &storage)
         nxHandle->initHandle();
         while (nxHandle->read(buff, &bytesRead, NX_BLOCKSIZE))
         {        
-            std::string haystack(buff, buff + NX_BLOCKSIZE);
-            if (haystack.find("PK11") != std::string::npos) {
+            //std::string haystack(buff, buff + NX_BLOCKSIZE);
+            //if (haystack.find("PK11") != std::string::npos) {
                 type = BOOT1;
                 dbg_printf("NxStorage::NxStorage() - BOOT1 identified by looking for needle (PK11) in haystack (all file)\n");
                 break;
@@ -683,6 +691,24 @@ void NxStorage::constructor(const wstring &storage)
                         }
                         else if (memcmp(pk1ldr.build_timestamp, "20220209", 8) == 0) {
                             firmware_version_boot0.major = 14;
+                        }
+                        else if (memcmp(pk1ldr.build_timestamp, "20220801", 8) == 0) {
+                            firmware_version_boot0.major = 15;
+                        }
+                        else if (memcmp(pk1ldr.build_timestamp, "20230111", 8) == 0) {
+                            firmware_version_boot0.major = 16;
+                        }
+                        else if (memcmp(pk1ldr.build_timestamp, "20230906", 8) == 0) {
+                            firmware_version_boot0.major = 17;
+                        }
+                        else if (memcmp(pk1ldr.build_timestamp, "20240207", 8) == 0) {
+                            firmware_version_boot0.major = 18;
+                        }
+                        else if (memcmp(pk1ldr.build_timestamp, "20240808", 8) == 0) {
+                            firmware_version_boot0.major = 19;
+                        }
+                        else if (memcmp(pk1ldr.build_timestamp, "20250206", 8) == 0) {
+                            firmware_version_boot0.major = 20;
                         }
                         break;
                     }
