@@ -12,6 +12,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install 7-Zip
+        run: |
+          choco install 7zip -y
+
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
@@ -20,20 +25,23 @@ jobs:
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-make
             mingw-w64-x86_64-gcc
-      - name: Download and extract PATCH.zip
+
+      - name: Download and extract PATCH.zip using 7-Zip
         run: |
           curl -L https://github.com/lsp199308/NxNandManager/releases/download/QT%26Openssl/PATCH.zip -o PATCH.zip
-          powershell -Command "Expand-Archive -Path PATCH.zip -DestinationPath C:\"
+          "C:\Program Files\7-Zip\7z.exe" x PATCH.zip -oC:\
+
       - name: build
         shell: msys2 {0}
         run: |
           ln -s $(pwd) ~/NxNandManager
           cd ~/NxNandManager/NxNandManager_Qt6
-          cmake -G "MinGW Makefiles" . --trace-expand
-          mingw32-make VERBOSE=1 -j"$(nproc)"
+          cmake -G "MinGW Makefiles" .
+          mingw32-make -j"$(nproc)"
           mkdir -p $GITHUB_WORKSPACE/bin
           cp NxNandManager.exe $GITHUB_WORKSPACE/bin
           cp virtual_fs/dokan/x64/dokan1.dll $GITHUB_WORKSPACE/bin
+
       - uses: actions/upload-artifact@v4
         with:
           name: NxNandManager
