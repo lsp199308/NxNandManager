@@ -300,7 +300,7 @@ void NxStorage::constructor(const wstring &storage)
                 type = BOOT1;
                 dbg_printf("NxStorage::NxStorage() - BOOT1 identified by looking for needle (PK11) in haystack (all file)\n");
                 break;
-            }
+            //}
         }
     }
 
