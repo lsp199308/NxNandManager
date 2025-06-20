@@ -1,85 +1,69 @@
-cmake_minimum_required(VERSION 3.29)
-project(NxNandManager)
+cmake_minimum_required(VERSION 3.22)
+project(NxNandManager LANGUAGES C CXX)
 
-# 设置 C++ 标准和 Qt 配置
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(QT_STATIC ON)
 
-# 设置 Qt 安装路径
 set(CMAKE_PREFIX_PATH "C:/Qt/build-static")
 
-find_package(Qt6 COMPONENTS
-        Core
-        Gui
-        Widgets
-        Network
-        REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets Network REQUIRED)
 
-# 收集源文件
 file(GLOB main *.cpp *.h)
 file(GLOB gui gui/*.cpp gui/*.h gui/*.ui)
 file(GLOB res res/*.cpp res/*.h)
 file(GLOB ziplib
-        lib/ZipLib/*.cpp
-        lib/ZipLib/*.h
-        lib/ZipLib/detail/*.cpp
-        lib/ZipLib/detail/*.h
-        lib/ZipLib/extlibs/bzip2/*.c
-        lib/ZipLib/extlibs/bzip2/*.h
-        lib/ZipLib/extlibs/lzma/*.c
-        lib/ZipLib/extlibs/lzma/*.h
-        lib/ZipLib/extlibs/zlib/*.c
-        lib/ZipLib/extlibs/zlib/*.h
-        lib/ZipLib/utils/*.h)
+    lib/ZipLib/*.cpp
+    lib/ZipLib/*.h
+    lib/ZipLib/detail/*.cpp
+    lib/ZipLib/detail/*.h
+    lib/ZipLib/extlibs/bzip2/*.c
+    lib/ZipLib/extlibs/bzip2/*.h
+    lib/ZipLib/extlibs/lzma/*.c
+    lib/ZipLib/extlibs/lzma/*.h
+    lib/ZipLib/extlibs/zlib/*.c
+    lib/ZipLib/extlibs/zlib/*.h
+    lib/ZipLib/utils/*.h)
 file(GLOB fatfs lib/fatfs/*)
 
-# 资源文件
-qt_add_resources(NxNandManager_RESOURCES
-    gui/application.qrc
+file(GLOB ziplib_c
+    lib/ZipLib/extlibs/bzip2/*.c
+    lib/ZipLib/extlibs/lzma/*.c
+    lib/ZipLib/extlibs/zlib/*.c
 )
+set_source_files_properties(${ziplib_c} PROPERTIES LANGUAGE C)
 
-# 添加虚拟文件系统源文件
-file(GLOB virtual_fs_sources
-    virtual_fs/*.cpp
-    virtual_fs/*.h
-)
+qt_add_resources(NxNandManager_RESOURCES gui/application.qrc)
 
-# 创建可执行文件
+file(GLOB virtual_fs_sources virtual_fs/*.cpp virtual_fs/*.h)
+
 add_executable(NxNandManager
-        ${main}
-        ${gui}
-        ${res}
-        ${ziplib}
-        ${fatfs}
-        ${NxNandManager_RESOURCES}
-        ${virtual_fs_sources}
-        gui/appicon.rc
+    ${main}
+    ${gui}
+    ${res}
+    ${ziplib}
+    ${fatfs}
+    ${NxNandManager_RESOURCES}
+    ${virtual_fs_sources}
+    gui/appicon.rc
 )
 
-# 链接 Qt 库
 target_link_libraries(NxNandManager
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-        Qt::Network
+    Qt::Core
+    Qt::Gui
+    Qt::Widgets
+    Qt::Network
+    dokan1
+    crypto
 )
 
-# 链接其他依赖库
-target_link_libraries(NxNandManager
-        dokan1        # Dokan 库
-        crypto        # Crypto 库
-)
-
-# 设置库文件的查找路径
 target_link_directories(NxNandManager PRIVATE
-    virtual_fs/dokan/x64/lib        # Dokan 库目录
-    C:/OpenSSL/OpenSSL_mingw64/lib  # OpenSSL 库目录
+    virtual_fs/dokan/x64/lib
+    C:/OpenSSL/OpenSSL_mingw64/lib
 )
 
-# 设置头文件的查找路径
 target_include_directories(NxNandManager PRIVATE
     C:/OpenSSL/OpenSSL_mingw64/include
     virtual_fs/dokan/include
