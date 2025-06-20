@@ -233,7 +233,9 @@ int NxFile::resize(u64 new_size, bool set_cursor_for_write)
         f_entry.off_start = m_files.back().off_start + m_files.back().size;
         f_entry.size = size;
         wchar_t buff[3];
-        swprintf(buff, L"%02X", std::stoi(m_files.back().file)+1);
+        std::wstringstream ss;
+ss << std::hex << std::stoi(m_files.back().file) + 1;
+buff = ss.str();
         f_entry.file = wstring(buff);
         f_close(&m_fp);
         FRESULT res;
